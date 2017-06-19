@@ -33,6 +33,16 @@
 
 #include "simba.h"
 
+/**
+ * Read and write flag to inhibit sending the start condition.
+ */
+#define I2C_SOFT_FLAGS_NO_START_CONDITION                 0x1
+
+/**
+ * Read and write flag to inhibit sending the stop condition.
+ */
+#define I2C_SOFT_FLAGS_NO_STOP_CONDITION                  0x2
+
 struct i2c_soft_driver_t {
     struct pin_device_t *scl_p;
     struct pin_device_t *sda_p;
@@ -125,6 +135,44 @@ ssize_t i2c_soft_write(struct i2c_soft_driver_t *self_p,
                        int address,
                        const void *buf_p,
                        size_t size);
+
+/**
+ * Read given number of bytes into given buffer from given slave.
+ *
+ * @param[in] self_p Driver object.
+ * @param[in] address Slave address to read from.
+ * @param[out] buf_p Buffer to read into.
+ * @param[in] size Number of bytes to read.
+ * @param[in] flags Write flags. May be any combination of the
+ *                  ``I2C_SOFT_FLAGS_*`` defines. If zero(0) this
+ *                  function behaves as `i2c_soft_read()`.
+ *
+ * @return Number of bytes read or negative error code.
+ */
+ssize_t i2c_soft_read_with_flags(struct i2c_driver_t *self_p,
+                                 int address,
+                                 void *buf_p,
+                                 size_t size,
+                                 int flags);
+
+/**
+ * Write given number of bytes from given buffer to given slave.
+ *
+ * @param[in] self_p Driver object.
+ * @param[in] address Slave address to write to.
+ * @param[in] buf_p Buffer to write.
+ * @param[in] size Number of bytes to write.
+ * @param[in] flags Read flags. May be any combination of the
+ *                  ``I2C_SOFT_FLAGS_*`` defines. If zero(0) this
+ *                  function behaves as `i2c_soft_write()`.
+ *
+ * @return Number of bytes written or negative error code.
+ */
+ssize_t i2c_soft_write_with_flags(struct i2c_driver_t *self_p,
+                                  int address,
+                                  const void *buf_p,
+                                  size_t size,
+                                  int flags);
 
 /**
  * Scan the i2c bus for a slave with given address.
