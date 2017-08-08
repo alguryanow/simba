@@ -40,6 +40,7 @@
 #define PORT_HAS_XBEE_CLIENT
 #define PORT_HAS_HX711
 #define PORT_HAS_GNSS
+#define PORT_HAS_HD44780
 
 /**
  * Used to include driver header files and the c-file source.
@@ -98,6 +99,11 @@
 #    define PORT_HAS_SPI
 #    define PORT_HAS_USB
 #    define PORT_HAS_USB_HOST
+#endif
+
+#if defined(FAMILY_SAMD)
+#    define PORT_HAS_EEPROM_SOFT
+#    define PORT_HAS_FLASH
 #endif
 
 #if defined(FAMILY_ESP)

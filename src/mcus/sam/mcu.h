@@ -51,6 +51,11 @@
 #    define CAN_DEVICE_MAX               2
 #    define USB_DEVICE_MAX               1
 #    define I2C_DEVICE_MAX               2
+#elif defined(MCU_SAMD21G18)
+#    define PIN_DEVICE_MAX              10
+#    define UART_DEVICE_MAX              2
+#    define I2C_DEVICE_MAX               1
+#    define FLASH_DEVICE_MAX             1
 #else
 #     error "Unsupported MCU."
 #endif
